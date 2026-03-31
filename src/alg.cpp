@@ -27,28 +27,28 @@ std::string infx2pstfx(const std::string& inf) {
             }
             if (!out.empty()) out += ' ';
             out += num;
-            continue;
+            continue; // i уже увеличено
         } else if (c == '(') {
-            st.push(c);
+            st.Push(c);
         } else if (c == ')') {
-            while (!st.isEmpty() && st.top() != '(') {
+            while (!st.IsEmpty() && st.Top() != '(') {
                 if (!out.empty()) out += ' ';
-                out += st.pop();
+                out += st.Pop();
             }
-            if (!st.isEmpty() && st.top() == '(') st.pop();
+            if (!st.IsEmpty() && st.Top() == '(') st.Pop();
         } else if (c == '+' || c == '-' || c == '*' || c == '/') {
-            while (!st.isEmpty() && st.top() != '(' && prec[st.top()] >= prec[c]) {
+            while (!st.IsEmpty() && st.Top() != '(' && prec[st.Top()] >= prec[c]) {
                 if (!out.empty()) out += ' ';
-                out += st.pop();
+                out += st.Pop();
             }
-            st.push(c);
+            st.Push(c);
         }
         ++i;
     }
 
-    while (!st.isEmpty()) {
+    while (!st.IsEmpty()) {
         if (!out.empty()) out += ' ';
-        out += st.pop();
+        out += st.Pop();
     }
     return out;
 }
@@ -59,8 +59,8 @@ int eval(const std::string& post) {
     std::string token;
     while (ss >> token) {
         if (token.size() == 1 && (token[0] == '+' || token[0] == '-' || token[0] == '*' || token[0] == '/')) {
-            int b = st.pop();
-            int a = st.pop();
+            int b = st.Pop();
+            int a = st.Pop();
             int res;
             switch (token[0]) {
                 case '+': res = a + b; break;
@@ -69,10 +69,10 @@ int eval(const std::string& post) {
                 case '/': res = a / b; break;
                 default: res = 0;
             }
-            st.push(res);
+            st.Push(res);
         } else {
-            st.push(std::stoi(token));
+            st.Push(std::stoi(token));
         }
     }
-    return st.pop();
+    return st.Pop();
 }
