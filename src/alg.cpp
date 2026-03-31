@@ -29,26 +29,26 @@ std::string infx2pstfx(const std::string& inf) {
             out += num;
             continue; // i уже увеличено
         } else if (c == '(') {
-            st.Push(c);
+            st.push(c);
         } else if (c == ')') {
-            while (!st.IsEmpty() && st.Top() != '(') {
+            while (!st.empty() && st.top() != '(') {
                 if (!out.empty()) out += ' ';
-                out += st.Pop();
+                out += st.pop();
             }
-            if (!st.IsEmpty() && st.Top() == '(') st.Pop();
+            if (!st.empty() && st.top() == '(') st.pop(); // удалить '('
         } else if (c == '+' || c == '-' || c == '*' || c == '/') {
-            while (!st.IsEmpty() && st.Top() != '(' && prec[st.Top()] >= prec[c]) {
+            while (!st.empty() && st.top() != '(' && prec[st.top()] >= prec[c]) {
                 if (!out.empty()) out += ' ';
-                out += st.Pop();
+                out += st.pop();
             }
-            st.Push(c);
+            st.push(c);
         }
         ++i;
     }
 
-    while (!st.IsEmpty()) {
+    while (!st.empty()) {
         if (!out.empty()) out += ' ';
-        out += st.Pop();
+        out += st.pop();
     }
     return out;
 }
@@ -59,8 +59,8 @@ int eval(const std::string& post) {
     std::string token;
     while (ss >> token) {
         if (token.size() == 1 && (token[0] == '+' || token[0] == '-' || token[0] == '*' || token[0] == '/')) {
-            int b = st.Pop();
-            int a = st.Pop();
+            int b = st.pop();
+            int a = st.pop();
             int res;
             switch (token[0]) {
                 case '+': res = a + b; break;
@@ -69,10 +69,10 @@ int eval(const std::string& post) {
                 case '/': res = a / b; break;
                 default: res = 0;
             }
-            st.Push(res);
+            st.push(res);
         } else {
-            st.Push(std::stoi(token));
+            st.push(std::stoi(token));
         }
     }
-    return st.Pop();
+    return st.pop();
 }
