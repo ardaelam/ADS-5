@@ -4,35 +4,37 @@
 
 template<typename T, int size>
 class TStack {
-private:
-    T data[size];
-    int topIndex;
-public:
-    TStack() : topIndex(-1) {}
+ private:
+  static const int kSize = size;
+  T data[kSize];
+  int topIndex;
 
-    void push(T val) {
-        if (topIndex < size - 1) {
-            data[++topIndex] = val;
-        }
-    }
+ public:
+  TStack() : topIndex(-1) {}
 
-    T pop() {
-        if (topIndex >= 0) {
-            return data[topIndex--];
-        }
-        return T();
+  void push(T val) {
+    if (topIndex < kSize - 1) {
+      data[++topIndex] = val;
     }
+  }
 
-    T top() const {
-        if (topIndex >= 0) {
-            return data[topIndex];
-        }
-        return T();
+  T pop() {
+    if (topIndex >= 0) {
+      return data[topIndex--];
     }
+    return T();
+  }
 
-    bool empty() const {
-        return topIndex == -1;
+  T top() const {
+    if (topIndex >= 0) {
+      return data[topIndex];
     }
+    return T();
+  }
+
+  bool empty() const {
+    return topIndex == -1;
+  }
 };
 
-#endif
+#endif  // INCLUDE_TSTACK_H_
