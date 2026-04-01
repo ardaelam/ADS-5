@@ -27,7 +27,7 @@ std::string infx2pstfx(const std::string& inf) {
             }
             if (!out.empty()) out += ' ';
             out += num;
-            continue; // i уже увеличено
+            continue;
         } else if (c == '(') {
             st.push(c);
         } else if (c == ')') {
@@ -35,9 +35,10 @@ std::string infx2pstfx(const std::string& inf) {
                 if (!out.empty()) out += ' ';
                 out += st.pop();
             }
-            if (!st.empty() && st.top() == '(') st.pop(); // удалить '('
+            if (!st.empty() && st.top() == '(') st.pop();
         } else if (c == '+' || c == '-' || c == '*' || c == '/') {
-            while (!st.empty() && st.top() != '(' && prec[st.top()] >= prec[c]) {
+            while (!st.empty() && st.top() != '(' &&
+                   prec[st.top()] >= prec[c]) {
                 if (!out.empty()) out += ' ';
                 out += st.pop();
             }
@@ -58,7 +59,9 @@ int eval(const std::string& post) {
     std::stringstream ss(post);
     std::string token;
     while (ss >> token) {
-        if (token.size() == 1 && (token[0] == '+' || token[0] == '-' || token[0] == '*' || token[0] == '/')) {
+        if (token.size() == 1 &&
+            (token[0] == '+' || token[0] == '-' ||
+             token[0] == '*' || token[0] == '/')) {
             int b = st.pop();
             int a = st.pop();
             int res;
