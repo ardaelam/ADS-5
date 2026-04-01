@@ -2,35 +2,37 @@
 #ifndef INCLUDE_TSTACK_H_
 #define INCLUDE_TSTACK_H_
 
-template <typename T, int size> class TStack {
+template<typename T, int size>
+class TStack {
 private:
-  T data[size];
-  int topIndex;
-
+    T data[size];
+    int topIndex;
 public:
-  TStack() : topIndex(-1) {}
+    TStack() : topIndex(-1) {}
 
-  void push(T val) {
-    if (topIndex < size - 1) {
-      data[++topIndex] = val;
+    void push(T val) {
+        if (topIndex < size - 1) {
+            data[++topIndex] = val;
+        }
     }
-  }
 
-  T pop() {
-    if (topIndex >= 0) {
-      return data[topIndex--];
+    T pop() {
+        if (topIndex >= 0) {
+            return data[topIndex--];
+        }
+        return T();
     }
-    return T();
-  }
 
-  T top() const {
-    if (topIndex >= 0) {
-      return data[topIndex];
+    T top() const {
+        if (topIndex >= 0) {
+            return data[topIndex];
+        }
+        return T();
     }
-    return T();
-  }
 
-  bool empty() const { return topIndex == -1; }
+    bool empty() const {
+        return topIndex == -1;
+    }
 };
 
 #endif
